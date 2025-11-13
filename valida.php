@@ -14,8 +14,7 @@ $usuario_ingresado = trim($_POST['usuario']);
 $password_ingresada = $_POST['password'];
 
 // 3. CONECTARSE A LA BD (con comillas estándar)
-// ******** IMPORTANTE: REEMPLAZA CON TUS CREDENCIALES REALES *********
-$db = mysqli_connect("db.inf.uct.cl", "enecul", "adominacion01#.");
+$db = mysqli_connect('db.inf.uct.cl', 'enecul', 'adominacion01#.');
 
 // Verificar conexión
 if (mysqli_connect_errno()) {
