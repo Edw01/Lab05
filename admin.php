@@ -5,7 +5,7 @@ session_start();
 // 2. VERIFICAR LA SESIÓN (con comillas estándar y chequeo de 'logueado')
 if (!isset($_SESSION['estado']) || $_SESSION['estado'] != 'logueado') {
     // Si no hay sesión, se redirige y se termina la ejecución del script
-    header("Location: index_corregido.php");
+    header("Location: index.php");
     exit();
 }
 
