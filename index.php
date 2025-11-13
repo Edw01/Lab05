@@ -81,10 +81,10 @@ if (isset($_SESSION['error_login'])) {
 
             <!-- 
                 Formulario CORREGIDO:
-                1. action="valida_corregido.php" (apunta al script de validación corregido)
+                1. action="valida.php" (apunta al script de validación corregido)
                 2. method="POST" (necesario para enviar datos por POST)
             -->
-            <form action="valida_corregido.php" method="POST">
+            <form action="valida.php" method="POST">
                 <!-- 
                     Campo de Usuario (o Email)
                     CAMBIOS:
