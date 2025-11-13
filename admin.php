@@ -1,27 +1,19 @@
 <?php
-
 // 1. INICIAR LA SESIÓN
-
 session_start();
 
-// 2. VERIFICAR LA SESIÓN: Si la variable ‘estado' no existe, redirigir al login
-
-if (!isset($_SESSION[‘estado’])) {
-
-// Si no hay sesión, se redirige y se termina la ejecución del script
-
-header("Location: index.php");
-
-exit();
-
+// 2. VERIFICAR LA SESIÓN (con comillas estándar y chequeo de 'logueado')
+if (!isset($_SESSION['estado']) || $_SESSION['estado'] != 'logueado') {
+    // Si no hay sesión, se redirige y se termina la ejecución del script
+    header("Location: index_corregido.php");
+    exit();
 }
 
+// 3. RECUPERAR DATOS DEL USUARIO (para el saludo)
+// Usamos htmlspecialchars para prevenir ataques XSS al imprimir el nombre
+$nombre_usuario = htmlspecialchars($_SESSION['usuario']);
+$inicial_usuario = strtoupper(substr($nombre_usuario, 0, 1));
 ?>
-
-<!DOCTYPE html>
-
-<html lang="es">
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -42,14 +34,10 @@ exit();
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa; /* bg-light de Bootstrap */
         }
-
-        /* Variables de color de la marca */
         :root {
             --brand-orange: #F97316;
             --brand-orange-dark: #EA580C;
         }
-
-        /* Clases personalizadas de la marca */
         .text-brand-orange { color: var(--brand-orange); }
         .bg-brand-orange { background-color: var(--brand-orange); }
         .btn-brand-orange {
@@ -62,8 +50,6 @@ exit();
             border-color: var(--brand-orange-dark);
             color: #fff;
         }
-
-        /* Anular el color del focus de Bootstrap */
         .form-control:focus {
             border-color: var(--brand-orange);
             box-shadow: 0 0 0 0.25rem rgba(249, 115, 22, 0.25);
@@ -71,19 +57,13 @@ exit();
         .nav-link:hover, .nav-link.active {
             color: var(--brand-orange) !important;
         }
-
-        /* Estilos para la sección Hero */
         .hero-section {
             position: relative;
             height: 50vh;
             border-radius: 0.5rem;
             overflow: hidden;
         }
-        .hero-section img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .hero-section img { width: 100%; height: 100%; object-fit: cover; }
         .hero-section .hero-overlay {
             position: absolute;
             inset: 0;
@@ -95,8 +75,6 @@ exit();
             left: 2rem;
             color: #fff;
         }
-
-        /* Estilos para las filas de anime */
         .anime-row {
             display: flex;
             overflow-x: auto;
@@ -105,18 +83,11 @@ exit();
         }
         .anime-card {
             flex-shrink: 0;
-            width: 12rem; /* 192px (w-48 de Tailwind era 12rem) */
+            width: 12rem;
             transition: transform 0.2s ease-in-out;
         }
-        .anime-card:hover {
-            transform: scale(1.05);
-        }
-        .anime-card img {
-            height: 18rem; /* 288px (h-72 de Tailwind era 18rem) */
-            object-fit: cover;
-        }
-        
-        /* Ocultar la barra de scroll horizontal */
+        .anime-card:hover { transform: scale(1.05); }
+        .anime-card img { height: 18rem; object-fit: cover; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -159,10 +130,25 @@ exit();
                             aria-label="Buscar"
                         >
                     </form>
-                    <!-- Icono de Perfil -->
-                    <a href="login.html" class="btn btn-brand-orange rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px;">
-                        U
-                    </a>
+
+                    <!-- 
+                        Icono de Perfil CORREGIDO:
+                        1. Convertido en un Dropdown de Bootstrap.
+                        2. Muestra la inicial del usuario.
+                        3. El dropdown muestra el nombre de usuario completo.
+                        4. El dropdown contiene el enlace a "cerrarSesion.php".
+                    -->
+                    <div class="dropdown">
+                        <button class="btn btn-brand-orange rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php echo $inicial_usuario; ?>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><span class="dropdown-item-text">Logueado como:<br><b><?php echo $nombre_usuario; ?></b></span></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="cerrarSesion.php">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </nav>
@@ -176,9 +162,10 @@ exit();
             <img src="https://placehold.co/1200x600/333333/FFFFFF?text=Anime+Destacado" alt="Anime Destacado" onerror="this.src='https://placehold.co/1200x600/333333/FFFFFF?text=Fallback+Image'">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <h2 class="display-5 fw-bold mb-2">Jujutsu Kaisen</h2>
+                <!-- SALUDO AL USUARIO AÑADIDO (aquí o en la barra de nav) -->
+                <h2 class="display-5 fw-bold mb-2">¡Bienvenido, <?php echo $nombre_usuario; ?>!</h2>
                 <p class="col-lg-8 fs-6 mb-3">
-                    Un hechicero adolescente se une a una organización secreta para cazar maldiciones y proteger el mundo.
+                    Disfruta del mejor anime, como este destacado de la semana.
                 </p>
                 <a href="#" class="btn btn-brand-orange btn-lg fw-semibold">
                     Ver Ahora
@@ -209,23 +196,6 @@ exit();
                     </div>
                 </div>
 
-                <!-- Tarjeta de Anime 3 -->
-                <div class="card shadow-sm anime-card">
-                    <img src="https://placehold.co/300x450/1A2941/6FFFE9?text=One+Piece" class="card-img-top" alt="One Piece" onerror="this.src='https://placehold.co/300x450/1A2941/6FFFE9?text=Fallback+Image'">
-                    <div class="card-body p-3">
-                        <h6 class="card-title fw-semibold text-dark text-truncate mb-0">One Piece</h6>
-                        <p class="card-text text-muted small">Subtitulado</p>
-                    </div>
-                </div>
-                
-                <!-- Tarjeta de Anime 4 -->
-                <div class="card shadow-sm anime-card">
-                    <img src="https://placehold.co/300x450/1A2941/6FFFE9?text=Bocchi+the+Rock" class="card-img-top" alt="Bocchi the Rock!" onerror="this.src='https://placehold.co/300x450/1A2941/6FFFE9?text=Fallback+Image'">
-                    <div class="card-body p-3">
-                        <h6 class="card-title fw-semibold text-dark text-truncate mb-0">Bocchi the Rock!</h6>
-                        <p class="card-text text-muted small">Subtitulado</p>
-                    </div>
-                </div>
                 <!-- ... más tarjetas ... -->
             </div>
         </section>
@@ -251,4 +221,3 @@ exit();
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-</html>
