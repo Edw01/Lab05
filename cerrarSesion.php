@@ -1,5 +1,4 @@
 <?php
-
    // Inicio la sesión
    session_start();
 
@@ -9,5 +8,4 @@
  //Y me voy al inicio  
  header("Location: index.php");  
  exit();
-
 ?>
