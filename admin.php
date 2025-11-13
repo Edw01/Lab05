@@ -93,6 +93,10 @@ $inicial_usuario = strtoupper(substr($nombre_usuario, 0, 1));
     </style>
 </head>
 <body>
+    <!-- 
+      HTML CORREGIDO:
+      Se eliminó el DOCTYPE y <html> duplicados
+    -->
 
     <!-- Barra de Navegación Superior -->
     <header class="navbar navbar-expand-md bg-white shadow-sm sticky-top">
@@ -162,7 +166,7 @@ $inicial_usuario = strtoupper(substr($nombre_usuario, 0, 1));
             <img src="https://placehold.co/1200x600/333333/FFFFFF?text=Anime+Destacado" alt="Anime Destacado" onerror="this.src='https://placehold.co/1200x600/333333/FFFFFF?text=Fallback+Image'">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <!-- SALUDO AL USUARIO AÑADIDO (aquí o en la barra de nav) -->
+                <!-- SALUDO AL USUARIO AÑADIDO (Requisito 2) -->
                 <h2 class="display-5 fw-bold mb-2">¡Bienvenido, <?php echo $nombre_usuario; ?>!</h2>
                 <p class="col-lg-8 fs-6 mb-3">
                     Disfruta del mejor anime, como este destacado de la semana.
@@ -221,3 +225,4 @@ $inicial_usuario = strtoupper(substr($nombre_usuario, 0, 1));
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
+</html>

@@ -79,19 +79,7 @@ if (isset($_SESSION['error_login'])) {
                 </div>
             <?php endif; ?>
 
-            <!-- 
-                Formulario CORREGIDO:
-                1. action="valida.php" (apunta al script de validación corregido)
-                2. method="POST" (necesario para enviar datos por POST)
-            -->
             <form action="valida.php" method="POST">
-                <!-- 
-                    Campo de Usuario (o Email)
-                    CAMBIOS:
-                    1. name="usuario" (para que $_POST['usuario'] funcione)
-                    2. id="usuario" y label for="usuario"
-                    3. type="text" (puedes cambiarlo a "email" si la BD usa email)
-                -->
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Usuario o Correo</label>
                     <input 
@@ -104,11 +92,6 @@ if (isset($_SESSION['error_login'])) {
                     >
                 </div>
 
-                <!-- 
-                    Campo de Contraseña
-                    CAMBIOS:
-                    1. name="password" (para que $_POST['password'] funcione)
-                -->
                 <div class="mb-4">
                     <label for="password" class="form-label">Contraseña</label>
                     <input 
@@ -141,7 +124,9 @@ if (isset($_SESSION['error_login'])) {
         </div>
     </div>
 
-    <!-- Bootstrap JS (Opcional, pero recomendado) -->
+    <!-- EL FORMULARIO DUPLICADO HA SIDO ELIMINADO -->
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
